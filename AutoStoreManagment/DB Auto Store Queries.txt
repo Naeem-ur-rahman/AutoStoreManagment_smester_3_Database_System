@@ -1,0 +1,28 @@
+Create table StoreEmp (id number primary key, name varchar2(25) not null,city varchar2(10) ,post varchar2(10),age number (3),salary number(7) not null);
+
+ create sequence storeemp_s;
+
+create or replace trigger storeemp_t Before Insert on storeemp for each row begin Select storeemp_s.nextval into :new.id from dual; end;
+
+ insert into storeemp values(1,'NAEEM UR RAHMAN','SAHIWAL','MANAGER',19,45000);
+
+//create table storeCashier(id  number, eid references storeemp(id),username varchar2(20) not null,password varchar2(12),primary key(id,eid));
+
+
+Create table storeCatagory(id number primary key,ctitle varchar2(15) not null );
+Create table storeBrand(id number primary key,btitle varchar2(15) not null );
+create table storeProduct (pid number primary key, catid references storecatagory(id) not null,bid references storeBrand (id) not null, title varchar2(20), costprice number, retailprice number,quantity number ,barcode varchar2(10) );
+create table storeCashier(id  number primary key, eid references storeemp(id) not null,username varchar2(20) not null,password varchar2(12));
+create table storeOrder (id number primary key, cid references storeCashier (id) not null,subtotal number not null,pay number not null,balance number not null,date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+create table storeOrderLine (oid references storeOrder(id),pid references storeProduct(pid),p_price number,Quantity number, total number ,primary key(oid,pid));
+
+
+
+
+
+
+
+
+
+
+
